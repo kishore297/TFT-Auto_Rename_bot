@@ -1,14 +1,12 @@
-from config import Config, Txt, ADMIN
+from config import *
 from helper.database import TFTBOTS
-from pyrogram.types import Message
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
 import os, sys, time, asyncio, logging, datetime, traceback
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-ADMIN_USER_ID = ADMIN
 
 # Flag to indicate if the bot is restarting
 is_restarting = False
@@ -16,7 +14,7 @@ is_restarting = False
 
 # Add an admin command
 @Client.on_message(filters.command("add_admin") & filters.user(Config.OWNER))
-async def add_admin(client, message):
+async def add_admin(bot: Client, message: Message):
     if len(message.command) != 2:
         await message.reply_text("Usage: /add_admin <user_id>")
         return
@@ -30,7 +28,7 @@ async def add_admin(client, message):
 
 # Remove an admin command
 @Client.on_message(filters.command("remove_admin") & filters.user(Config.OWNER))
-async def remove_admin(client, message):
+async def remove_admin(bot: Client, message: Message):
     if len(message.command) != 2:
         await message.reply_text("Usage: /remove_admin <user_id>")
         return

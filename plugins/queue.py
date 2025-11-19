@@ -25,14 +25,21 @@ queue = {}  # Dictionary to manage user queues
 pending_tokens = {}
 
 
+PRIVATE = bool(Config.PRIVATE_USE)
+
 @Client.on_message(filters.private & (filters.document | filters.video | filters.audio))
 async def handle_document(client: Client, message: Message):
     global queue_size
     user_id = message.from_user.id
+    if PRIVATE :
+        if user_id not in ([Config.OWNER] + ADMIN):
+            await message.reply_text("😔Oops .. Only Authorised Users can Use me ✅")
+            return
+    
     if TOKEN_VERIFY:
         is_verified = await check_verification(client, message.from_user.id)
         if not is_verified:
-            message.delete()
+            await message.delete()
             if user_id in pending_tokens:
                 verification_url = pending_tokens[user_id]
             else:
@@ -44,8 +51,8 @@ async def handle_document(client: Client, message: Message):
              reply_markup=InlineKeyboardMarkup([
                  [InlineKeyboardButton('🔗 Verify Now ☘️', url=verification_url)]
               ])
-          )
-        return
+            )
+            return
     
     _bool_queue = await TFTBOTS.get_queue(user_id)
     if _bool_queue:
@@ -109,3 +116,12 @@ async def clear_one_queue(client: Client, message: Message):
             await message.reply_text(f"⚠️ No file at position {index}. Your queue has {len(queue[user_id]['messages'])} files.")
     else:
         await message.reply_text("⚠️ Your queue is already empty.")
+
+
+
+
+
+
+
+
+
