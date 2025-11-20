@@ -10,7 +10,7 @@
 <b><i>Telegram Bot to store Posts and Documents and it can Access by Special Links.</i></b> 
 
 
-### Features
+<b>Features :</b>
 
 - Set Metadata To File (eg:Tech_freak_tamil).
 - Set Custome Thumbnail Support 
