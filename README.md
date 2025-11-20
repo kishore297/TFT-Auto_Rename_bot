@@ -7,7 +7,7 @@
 </p>
 
 
-<b><i>Telegram Bot to store Posts and Documents and it can Access by Special Links.</i></b> 
+<b><i>Telegram Bot to Auto Rename Files With Metadata .</i></b> 
 
 
 ### Features
